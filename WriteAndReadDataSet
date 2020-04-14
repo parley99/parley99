@@ -1,0 +1,186 @@
+import java.io.*;
+import java.util.Arrays;
+
+public class WriteAndReadDataSet 
+{
+
+	public static void main(String[] args) throws Exception
+	{
+		String sensorName = "Sensor";
+		byte[] textAsByte = sensorName.getBytes();
+		String filename = "daten.txt";
+		FileOutputStream os = new FileOutputStream (filename);
+		DataOutputStream dos = new DataOutputStream (os);
+		FileInputStream is = new FileInputStream (filename);
+		DataInputStream dis = new DataInputStream (is);
+		byte [] readBuffer = new byte [100];
+		
+		try 
+		{
+			os.write(textAsByte);
+		
+		} catch (IOException ex)
+		{
+			System.err.println ("Couldn´t write data - fatal");
+			System.exit(0);
+		}
+	
+		
+		long timeStamps [] = new long [3];
+		timeStamps [0] = System.currentTimeMillis();
+		timeStamps [1] = timeStamps [0] + 1;
+		timeStamps [2] = timeStamps [1] + 1000;
+		
+		
+		float [][] values = new float[3][];
+		float [] valueSet = new float [2];
+		values[0] = valueSet;
+		valueSet[0] = (float) 1.5;
+		valueSet[1] = (float) 2.6;
+	
+		try 
+		{
+		
+			dos.writeLong(timeStamps[0]);
+		} catch (IOException ex)
+		{
+			System.err.println ("Couldn´t write data - fatal");
+			System.exit(0);
+		}
+	
+		
+		
+		try {
+			long readLongValue = dis.readLong();
+			System.out.println("Time " + readLongValue + " ms");
+		} catch (IOException ex) {
+			System.err.println ("Couldn´t read data - fatal");
+		}
+
+		
+		try
+		{
+			Arrays.toString(values[0]);
+			byte [] arrayAsBytes = Arrays.toString(values[0]).getBytes();
+			os.write(arrayAsBytes);
+		} catch (IOException ex)
+		{
+			System.err.println ("Couldn´t write.");
+		}
+		
+		
+		try {
+			is.read(readBuffer);
+		} catch (IOException ex) {
+			System.err.println ("Couldn´t read data - fatal");
+		}
+		String readString = new String (readBuffer);
+		System.out.println ("Temp: " +  readString);
+	
+		
+		
+		
+		
+		valueSet = new float [3];
+		values [1] = valueSet;
+		valueSet [0] = (float) 0.7;
+		valueSet [1] = (float) 1.2;
+		valueSet [2] = (float) 2.1;
+		
+		try 
+		{
+			
+			dos.writeLong(timeStamps[1]);
+			
+		} catch (IOException ex)
+		{
+			System.err.println ("Couldn´t write data - fatal");
+			System.exit(0);
+		}
+		
+		
+		
+		try {
+			long readLongValue = dis.readLong();
+			System.out.println("Time " + readLongValue  + " ms");
+		} catch (IOException ex) {
+			System.err.println ("Couldn´t read data - fatal");
+		}
+
+		
+		try
+		{
+			Arrays.toString(values[1]);
+			byte [] arrayAsBytes1 = Arrays.toString(values[1]).getBytes();
+			os.write(arrayAsBytes1);
+		} catch (IOException ex)
+		{
+			System.err.println ("Couldn´t write.");
+		}
+		
+		
+		try {
+			is.read(readBuffer);
+		} catch (IOException ex) {
+			System.err.println ("Couldn´t read data - fatal");
+		}
+		String readString1 = new String (readBuffer);
+		System.out.println ("Temp: " +  readString1);
+	
+		
+		
+		
+		
+		
+		
+		valueSet = new float [4];
+		values [2] = valueSet;
+		valueSet [0] = (float) 0.7;
+		valueSet [1] = (float) 1.2;
+		valueSet [2] = (float) 3.4;
+		valueSet [3] = (float) 5.5;
+		try 
+		{
+			
+			dos.writeLong(timeStamps[2]);
+			
+		} catch (IOException ex)
+		{
+			System.err.println ("Couldn´t write data - fatal");
+			System.exit(0);
+		}
+		
+		
+		try {
+			long readLongValue = dis.readLong();
+			System.out.println("Time " + readLongValue  + " ms");
+		} catch (IOException ex) {
+			System.err.println ("Couldn´t read data - fatal");
+		}
+
+		
+		try
+		{
+			byte [] arrayAsBytes2 = Arrays.toString(values[2]).getBytes();
+			os.write(arrayAsBytes2);
+		} catch (IOException ex)
+		{
+			System.err.println ("Couldn´t write.");
+		}
+		
+		
+		try {
+			is.read(readBuffer);
+		} catch (IOException ex) {
+			System.err.println ("Couldn´t read data - fatal");
+		}
+		String readString2 = new String (readBuffer);
+		System.out.println ("Temp: " +  readString2);
+
+		
+		
+	
+
+	}
+
+}
